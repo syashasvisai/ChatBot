@@ -51,7 +51,13 @@ ChatBot::ChatBot(const ChatBot &source)
   
   _chatLogic = source._chatLogic;
   _rootNode = source._rootNode;
-  // deep copy - from answers on the forum, but why?
+  
+  // deep copy - _image is a pointer and we want to copy the ChatBot object which contains it. In practice, we want every object to have complete control of only its member variables. We do this by avoiding the default behavior of copying (called shallow copying) and implementing deep copying.
+  
+  // Allocate new memory for the _image variable, using the new operator
+  _image = new wxBitmap();
+  
+  // copy the contents of the source's _image to the newly allocated _image
   *_image = *source._image;
 }
 
@@ -68,7 +74,11 @@ ChatBot& ChatBot::operator=(const ChatBot &source)
   
   _chatLogic = source._chatLogic;
   _rootNode = source._rootNode;
-  // deep copy
+  
+  // Allocate new memory for the _image variable, using the new operator
+  _image = new wxBitmap();
+  
+  // copy the contents of the source's _image to the newly allocated _image
   *_image = *source._image;
   
   return *this;
